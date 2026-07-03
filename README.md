@@ -72,6 +72,30 @@ https://thai-help-calculator.pages.dev/
 
 หมายเหตุ: `vite.config.js` ตั้ง `base` เป็น `/` เพราะ Cloudflare Pages เปิดเว็บจาก root ของโดเมน
 
+### Deploy ผ่าน GitHub Actions ไป Cloudflare Pages
+
+Workflow สำหรับกด deploy เองอยู่ที่ `.github/workflows/deploy-cloudflare.yml`
+
+ก่อนกด workflow ต้องตั้ง GitHub repository secrets:
+
+- `CLOUDFLARE_ACCOUNT_ID`
+- `CLOUDFLARE_API_TOKEN`
+
+วิธีตั้งค่า:
+
+1. ไปที่ Cloudflare Dashboard
+2. สร้าง API Token แบบ Custom Token
+3. ตั้ง permission เป็น `Account` -> `Cloudflare Pages` -> `Edit`
+4. คัดลอก Account ID จาก Cloudflare
+5. ไปที่ GitHub repository
+6. เปิด `Settings` -> `Secrets and variables` -> `Actions`
+7. เพิ่ม secret ทั้ง 2 ตัวด้านบน
+8. ไปที่แท็บ `Actions`
+9. เลือก workflow `Deploy to Cloudflare Pages`
+10. กด `Run workflow`
+
+Workflow จะรัน `npm ci`, `npm run build` แล้ว deploy โฟลเดอร์ `dist` ไปที่ Cloudflare Pages project ชื่อ `thai-help-calculator`
+
 ## GitHub Pages
 
 โปรเจกต์นี้ตั้งค่า GitHub Pages ผ่าน GitHub Actions แล้วใน `.github/workflows/deploy.yml`
