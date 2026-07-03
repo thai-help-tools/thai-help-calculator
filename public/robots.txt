@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thai-help-calculator.pages.dev/sitemap.xml
+Sitemap: https://ooy30.github.io/thai-help-calculator/sitemap.xml
