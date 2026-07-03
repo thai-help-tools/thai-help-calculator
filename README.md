@@ -58,11 +58,14 @@ npm run preview
 
 เมื่อต้องการ deploy:
 
-1. Push ไปที่ branch `main`
-2. ไปที่ GitHub repository
-3. เปิด `Settings` -> `Pages`
-4. ตั้ง `Build and deployment` เป็น `GitHub Actions`
-5. ตรวจผล deploy ที่แท็บ `Actions`
+1. ไปที่ GitHub repository
+2. เปิด `Settings` -> `Pages`
+3. ตั้ง `Build and deployment` เป็น `GitHub Actions`
+4. ไปที่แท็บ `Actions`
+5. เลือก workflow `Deploy to GitHub Pages`
+6. กด `Run workflow`
+7. เลือก branch `main`
+8. กด `Run workflow` อีกครั้งเพื่อเริ่ม deploy
 
 URL ที่ตั้งไว้สำหรับ GitHub Pages:
 
