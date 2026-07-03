@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thai-help-tools.github.io/sitemap.xml
+Sitemap: https://thai-help-tools.github.io/thai-help-calculator/sitemap.xml

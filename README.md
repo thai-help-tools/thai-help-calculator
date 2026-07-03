@@ -70,10 +70,10 @@ npm run preview
 URL ที่ตั้งไว้สำหรับ GitHub Pages:
 
 ```text
-https://thai-help-tools.github.io/
+https://thai-help-tools.github.io/thai-help-calculator/
 ```
 
-หมายเหตุ: repo ต้องชื่อ `thai-help-tools.github.io` และ `vite.config.js` ตั้ง `base` เป็น `/` เพื่อให้ asset path ทำงานถูกต้องบน GitHub Pages แบบ organization site
+หมายเหตุ: `vite.config.js` ตั้ง `base` เป็น `/thai-help-calculator/` เพื่อให้ asset path ทำงานถูกต้องบน GitHub Pages แบบ repository site
 
 ## Disclaimer
 
