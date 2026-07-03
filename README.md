@@ -52,6 +52,26 @@ Preview ไฟล์ production build:
 npm run preview
 ```
 
+## Cloudflare Pages
+
+แนะนำให้ deploy ฟรีด้วย Cloudflare Pages เพื่อให้เว็บอยู่ที่ root URL และใช้กับ Google AdSense ได้ง่ายกว่า GitHub Pages แบบ repository path
+
+URL ที่ตั้งไว้สำหรับ Cloudflare Pages:
+
+```text
+https://thai-help-calculator.pages.dev/
+```
+
+ตั้งค่า Cloudflare Pages:
+
+- Framework preset: `Vite`
+- Production branch: `main`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Root directory: เว้นว่างไว้
+
+หมายเหตุ: `vite.config.js` ตั้ง `base` เป็น `/` เพราะ Cloudflare Pages เปิดเว็บจาก root ของโดเมน
+
 ## GitHub Pages
 
 โปรเจกต์นี้ตั้งค่า GitHub Pages ผ่าน GitHub Actions แล้วใน `.github/workflows/deploy.yml`
@@ -73,7 +93,7 @@ URL ที่ตั้งไว้สำหรับ GitHub Pages:
 https://thai-help-tools.github.io/thai-help-calculator/
 ```
 
-หมายเหตุ: `vite.config.js` ตั้ง `base` เป็น `/thai-help-calculator/` เพื่อให้ asset path ทำงานถูกต้องบน GitHub Pages แบบ repository site
+หมายเหตุ: ตอนนี้ repo ตั้งค่าสำหรับ Cloudflare Pages แล้ว ถ้าจะกลับไปใช้ GitHub Pages แบบ repository site ให้เปลี่ยน `base` ใน `vite.config.js` กลับเป็น `/thai-help-calculator/`
 
 ## Disclaimer
 
