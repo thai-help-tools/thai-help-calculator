@@ -12,12 +12,6 @@ const pageMeta = {
       'เครื่องคำนวณไทยช่วยไทย พลัส 60/40 คำนวณสิทธิรัฐคงเหลือ ยอดที่รัฐช่วย และยอดที่ต้องจ่ายเองแบบง่าย ๆ ใช้งานฟรี ไม่ต้องกรอกข้อมูลส่วนตัว',
     url: `${SITE_URL}/`,
   },
-  privacy: {
-    title: 'นโยบายความเป็นส่วนตัว | คำนวณไทยช่วยไทย พลัส',
-    description:
-      'นโยบายความเป็นส่วนตัวของเว็บไซต์เครื่องคำนวณไทยช่วยไทย พลัส อธิบายการใช้ข้อมูล cookies และโฆษณา Google AdSense',
-    url: `${SITE_URL}/privacy-policy`,
-  },
 };
 
 const formatBaht = (value) =>
@@ -130,7 +124,7 @@ function updatePageMeta(meta) {
   setAttribute('link[rel="canonical"]', 'href', meta.url);
 }
 
-function Footer() {
+function Footer({ onOpenPrivacyPolicy }) {
   return (
     <footer className="site-footer">
       <p>
@@ -138,7 +132,9 @@ function Footer() {
         และไม่บันทึกข้อมูลส่วนตัวของผู้ใช้งาน
       </p>
       <nav className="footer-links" aria-label="ลิงก์ท้ายเว็บไซต์">
-        <a href="/privacy-policy">นโยบายความเป็นส่วนตัว</a>
+        <button className="footer-link-button" type="button" onClick={onOpenPrivacyPolicy}>
+          นโยบายความเป็นส่วนตัว
+        </button>
       </nav>
     </footer>
   );
@@ -147,6 +143,7 @@ function Footer() {
 function HomePage() {
   const [remainingRight, setRemainingRight] = useState('');
   const [hasEdited, setHasEdited] = useState(false);
+  const [isPrivacyPolicyOpen, setIsPrivacyPolicyOpen] = useState(false);
 
   const trimmedRemainingRight = remainingRight.trim();
   const remainingValue = Number(remainingRight);
@@ -329,75 +326,98 @@ function HomePage() {
         </section>
       </main>
 
-      <Footer />
+      <PrivacyPolicyDialog
+        isOpen={isPrivacyPolicyOpen}
+        onClose={() => setIsPrivacyPolicyOpen(false)}
+      />
+      <Footer onOpenPrivacyPolicy={() => setIsPrivacyPolicyOpen(true)} />
     </div>
   );
 }
 
-function PrivacyPolicyPage() {
+function PrivacyPolicyDialog({ isOpen, onClose }) {
+  useEffect(() => {
+    if (!isOpen) {
+      return undefined;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) {
+    return null;
+  }
+
   return (
-    <div className="site-shell">
-      <header className="hero hero--compact">
-        <div className="hero__content">
-          <p className="eyebrow">Privacy Policy</p>
-          <h1>นโยบายความเป็นส่วนตัว</h1>
-          <p className="hero__lead">
-            รายละเอียดการใช้ข้อมูล cookies และโฆษณาสำหรับเว็บไซต์เครื่องคำนวณไทยช่วยไทย พลัส
-          </p>
+    <div className="privacy-dialog" role="presentation" onMouseDown={(event) => {
+      if (event.target === event.currentTarget) {
+        onClose();
+      }
+    }}>
+      <section
+        className="privacy-dialog__panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="privacy-heading"
+      >
+        <div className="privacy-dialog__header">
+          <div>
+            <p className="eyebrow">Privacy Policy</p>
+            <h2 id="privacy-heading">นโยบายความเป็นส่วนตัว</h2>
+            <p className="policy-intro">
+              เว็บไซต์ thai-help-calculator.pages.dev จัดทำขึ้นเพื่อให้บริการเครื่องคำนวณไทยช่วยไทย พลัสแบบเบื้องต้น
+              โดยผู้ใช้งานสามารถคำนวณยอดสิทธิรัฐ ยอดที่ต้องจ่ายเอง และยอดโดยประมาณได้โดยไม่ต้องกรอกข้อมูลส่วนตัว
+            </p>
+          </div>
+          <button className="dialog-close-button" type="button" onClick={onClose} aria-label="ปิดนโยบายความเป็นส่วนตัว">
+            ×
+          </button>
         </div>
-      </header>
 
-      <main>
-        <section className="policy-section" aria-labelledby="privacy-heading">
-          <article className="policy-card">
-            <div>
-              <h2 id="privacy-heading">นโยบายความเป็นส่วนตัว</h2>
-              <p className="policy-intro">
-                เว็บไซต์ thai-help-calculator.pages.dev จัดทำขึ้นเพื่อให้บริการเครื่องคำนวณไทยช่วยไทย พลัสแบบเบื้องต้น
-                โดยผู้ใช้งานสามารถคำนวณยอดสิทธิรัฐ ยอดที่ต้องจ่ายเอง และยอดโดยประมาณได้โดยไม่ต้องกรอกข้อมูลส่วนตัว
-              </p>
-            </div>
-
-            {privacySections.map((section) => (
-              <section className="policy-item" key={section.title}>
-                <h2>{section.title}</h2>
-                <p>{section.body}</p>
-              </section>
-            ))}
-
-            <section className="policy-item policy-item--last" aria-labelledby="contact-heading">
-              <h2 id="contact-heading">ติดต่อเรา</h2>
-              <p>
-                หากมีคำถาม ข้อเสนอแนะ หรือต้องการแจ้งปัญหาเกี่ยวกับเว็บไซต์ สามารถติดต่อได้ที่อีเมล:
-                <a href="mailto:supportthaihelp@gmail.com">supportthaihelp@gmail.com</a>
-              </p>
+        <div className="privacy-dialog__body">
+          {privacySections.map((section) => (
+            <section className="policy-item" key={section.title}>
+              <h2>{section.title}</h2>
+              <p>{section.body}</p>
             </section>
+          ))}
 
-            <a className="back-link" href="/">
-              กลับหน้าแรก
-            </a>
-          </article>
+          <section className="policy-item policy-item--last" aria-labelledby="contact-heading">
+            <h2 id="contact-heading">ติดต่อเรา</h2>
+            <p>
+              หากมีคำถาม ข้อเสนอแนะ หรือต้องการแจ้งปัญหาเกี่ยวกับเว็บไซต์ สามารถติดต่อได้ที่อีเมล:
+              <a href="mailto:supportthaihelp@gmail.com">supportthaihelp@gmail.com</a>
+            </p>
+          </section>
+        </div>
+        <section className="privacy-dialog__footer">
+          <button className="dialog-action-button" type="button" onClick={onClose}>
+            ปิด
+          </button>
         </section>
-      </main>
-
-      <Footer />
+      </section>
     </div>
   );
 }
 
 function App() {
-  const normalizedPath = window.location.pathname
-    .replace(/\/index\.html$/, '')
-    .replace(/\/+$/, '') || '/';
-  const isPrivacyPolicyRoute = normalizedPath === '/privacy-policy';
-
   useEffect(() => {
-    updatePageMeta(isPrivacyPolicyRoute ? pageMeta.privacy : pageMeta.home);
-  }, [isPrivacyPolicyRoute]);
-
-  if (isPrivacyPolicyRoute) {
-    return <PrivacyPolicyPage />;
-  }
+    updatePageMeta(pageMeta.home);
+  }, []);
 
   return <HomePage />;
 }

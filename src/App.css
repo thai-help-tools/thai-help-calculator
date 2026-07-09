@@ -420,22 +420,6 @@ h3 {
   border-top: 1px solid var(--color-line);
 }
 
-.policy-section {
-  width: min(920px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 28px 0 54px;
-}
-
-.policy-card {
-  display: grid;
-  gap: 26px;
-  padding: 30px;
-  border: 1px solid var(--color-line);
-  border-radius: 8px;
-  background: var(--color-white);
-  box-shadow: var(--shadow);
-}
-
 .policy-intro,
 .policy-item p {
   color: #334155;
@@ -468,24 +452,101 @@ h3 {
   overflow-wrap: anywhere;
 }
 
-.back-link {
-  display: inline-flex;
-  justify-self: start;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 18px;
-  border: 1px solid var(--color-primary);
-  border-radius: 8px;
-  color: var(--color-primary);
-  background: #f7fbff;
-  font-weight: 800;
-  text-decoration: none;
+.privacy-dialog {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(22, 32, 51, 0.58);
 }
 
-.back-link:hover,
-.back-link:focus-visible,
+.privacy-dialog__panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(920px, 100%);
+  max-height: min(760px, calc(100vh - 40px));
+  overflow: hidden;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  background: var(--color-white);
+  box-shadow: 0 24px 70px rgba(22, 32, 51, 0.28);
+}
+
+.privacy-dialog__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 44px;
+  gap: 16px;
+  padding: 24px 24px 18px;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.privacy-dialog__header .eyebrow {
+  color: var(--color-primary);
+}
+
+.privacy-dialog__header h2 {
+  margin-bottom: 10px;
+}
+
+.privacy-dialog__body {
+  display: grid;
+  gap: 24px;
+  overflow: auto;
+  padding: 24px;
+}
+
+.privacy-dialog__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-line);
+  background: #f8fbff;
+}
+
+.dialog-close-button,
+.dialog-action-button {
+  border-radius: 8px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.dialog-close-button {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--color-line);
+  color: var(--color-primary);
+  background: #f7fbff;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+.dialog-action-button {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid var(--color-primary);
+  border-radius: 8px;
+  color: var(--color-white);
+  background: var(--color-primary);
+}
+
+.dialog-close-button:hover,
+.dialog-close-button:focus-visible {
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.dialog-action-button:hover,
+.dialog-action-button:focus-visible {
+  background: var(--color-primary-dark);
+}
+
 .footer-links a:hover,
-.footer-links a:focus-visible {
+.footer-links a:focus-visible,
+.footer-link-button:hover,
+.footer-link-button:focus-visible {
   color: var(--color-primary-dark);
   text-decoration: underline;
 }
@@ -514,6 +575,16 @@ footer {
   font-weight: 800;
 }
 
+.footer-link-button {
+  border: 0;
+  padding: 0;
+  color: var(--color-primary);
+  background: transparent;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
 @media (max-width: 860px) {
   .hero {
     padding-top: 42px;
@@ -528,24 +599,18 @@ footer {
   .hero__content,
   .calculator-section,
   .content-section,
-  .policy-section,
   footer {
     width: min(100% - 28px, 1120px);
   }
 
   .calculator-card,
   .summary-panel,
-  .article,
-  .policy-card {
+  .article {
     padding: 18px;
   }
 
   .article {
     gap: 24px;
-  }
-
-  .policy-card {
-    gap: 22px;
   }
 
   .article-section,
@@ -573,5 +638,33 @@ footer {
 
   .official-note {
     display: block;
+  }
+
+  .privacy-dialog {
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  .privacy-dialog__panel {
+    max-height: calc(100vh - 28px);
+  }
+
+  .privacy-dialog__header {
+    grid-template-columns: minmax(0, 1fr) 40px;
+    padding: 18px;
+  }
+
+  .privacy-dialog__body {
+    gap: 22px;
+    padding: 18px;
+  }
+
+  .privacy-dialog__footer {
+    padding: 14px 18px;
+  }
+
+  .dialog-close-button {
+    width: 40px;
+    height: 40px;
   }
 }
