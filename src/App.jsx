@@ -386,7 +386,9 @@ function PrivacyPolicyPage() {
 }
 
 function App() {
-  const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/';
+  const normalizedPath = window.location.pathname
+    .replace(/\/index\.html$/, '')
+    .replace(/\/+$/, '') || '/';
   const isPrivacyPolicyRoute = normalizedPath === '/privacy-policy';
 
   useEffect(() => {
