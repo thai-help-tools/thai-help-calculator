@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 const GOVERNMENT_RATE = 0.6;
 const PEOPLE_RATE = 0.4;
-const DAILY_GOVERNMENT_LIMIT = 200;
 const SITE_URL = 'https://thai-help-calculator.pages.dev';
 
 const pageMeta = {
@@ -152,7 +151,7 @@ function HomePage() {
   const error = hasEdited && isInvalidInput ? 'กรุณากรอกสิทธิรัฐคงเหลือมากกว่า 0 บาท' : '';
   const result = hasInput && !isInvalidInput
     ? (() => {
-        const governmentHelp = Math.min(remainingValue, DAILY_GOVERNMENT_LIMIT);
+        const governmentHelp = remainingValue;
         const maximumPurchase = governmentHelp / GOVERNMENT_RATE;
         const peoplePay = maximumPurchase * PEOPLE_RATE;
 
@@ -205,12 +204,12 @@ function HomePage() {
                       setRemainingRight(event.target.value);
                       setHasEdited(true);
                     }}
-                    aria-describedby={error ? 'remaining-error daily-limit' : 'daily-limit'}
+                    aria-describedby={error ? 'remaining-error calculation-note' : 'calculation-note'}
                   />
                   <span>บาท</span>
                 </div>
-                <p id="daily-limit" className="input-help">
-                  คำนวณโดยจำกัดสิทธิรัฐที่ใช้ได้ต่อวันไว้ที่ {formatBaht(DAILY_GOVERNMENT_LIMIT)}
+                <p id="calculation-note" className="input-help">
+                  คำนวณจากจำนวนสิทธิรัฐคงเหลือที่กรอกทั้งหมด โดยไม่จำกัดเพดาน 200 บาท
                 </p>
                 {error && (
                   <p id="remaining-error" className="error-message" role="alert">
@@ -245,11 +244,11 @@ function HomePage() {
                 <strong>40%</strong>
               </div>
               <div className="formula-line">
-                <span>จำกัดสิทธิรัฐต่อวัน</span>
-                <strong>{formatBaht(DAILY_GOVERNMENT_LIMIT)}</strong>
+                <span>เพดานการคำนวณ</span>
+                <strong>ไม่จำกัด</strong>
               </div>
               <p>
-                ถ้าสิทธิรัฐคงเหลือน้อยกว่าวงเงินต่อวัน ระบบจะใช้สิทธิที่เหลือจริงในการคำนวณ
+                กรอกสิทธิรัฐคงเหลือเท่าไหร่ ระบบจะนำยอดนั้นทั้งหมดไปคำนวณตามสัดส่วน 60/40
               </p>
             </aside>
           </div>
