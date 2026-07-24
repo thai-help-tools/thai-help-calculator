@@ -1,3 +1,4 @@
+import { Adsense } from '@ctrl/react-adsense';
 import React, { useEffect, useState } from 'react';
 
 const GOVERNMENT_RATE = 0.6;
@@ -151,16 +152,16 @@ function HomePage() {
   const error = hasEdited && isInvalidInput ? 'กรุณากรอกสิทธิรัฐคงเหลือมากกว่า 0 บาท' : '';
   const result = hasInput && !isInvalidInput
     ? (() => {
-        const governmentHelp = remainingValue;
-        const maximumPurchase = governmentHelp / GOVERNMENT_RATE;
-        const peoplePay = maximumPurchase * PEOPLE_RATE;
+      const governmentHelp = remainingValue;
+      const maximumPurchase = governmentHelp / GOVERNMENT_RATE;
+      const peoplePay = maximumPurchase * PEOPLE_RATE;
 
-        return {
-          governmentHelp,
-          maximumPurchase,
-          peoplePay,
-        };
-      })()
+      return {
+        governmentHelp,
+        maximumPurchase,
+        peoplePay,
+      };
+    })()
     : null;
 
   return (
@@ -254,7 +255,10 @@ function HomePage() {
           </div>
 
           <div className="ad-placeholder" role="complementary" aria-label="พื้นที่โฆษณาใต้เครื่องคำนวณ">
-            พื้นที่โฆษณา
+            <Adsense
+              client="ca-pub-5899856508233118"
+              slot="5190708928"
+            />
           </div>
         </section>
 
@@ -300,7 +304,11 @@ function HomePage() {
             </section>
 
             <div className="ad-placeholder ad-placeholder--article" role="complementary" aria-label="พื้นที่โฆษณากลางบทความ">
-              พื้นที่โฆษณา
+              <Adsense
+                client="ca-pub-5899856508233118"
+                slot="5190708928"
+              />
+
             </div>
 
             <section className="faq" aria-labelledby="faq-heading">
